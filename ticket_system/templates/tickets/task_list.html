@@ -1,0 +1,26 @@
+{% extends 'tickets/base_ticket.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<ol>
+  {% for task in tasks %}
+  <li><a href="{% url 'task-detail' task.id %}"></a></li>
+  {% endfor %}
+</ol>
+{% endblock %}
+<!--
+{% block form%}
+<h2>Add new Author</h2>
+<form action="{% url 'authors-index' %}" method="POST">
+{% csrf_token %}
+<ul>
+{{ form.as_ul }}
+</ul>
+<input type="submit" value="Add Author">
+</form>
+{% endblock %}
+-->
