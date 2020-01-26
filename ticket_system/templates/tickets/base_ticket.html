@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+
+    <header>
+    <div id="menu-element">
+      <span>
+      <a href="{% url 'task-list' %}">Tasks</a>
+      </span>
+    </div>
+    </header>
+
+    {% if filter_form %}
+    <div id="filter-form-wrapper">
+    {% block filter_form %}{% endblock %}
+    </div>
+    {% endif %}
+
+    <div id="content-wrapper">
+    {% block content %}{% endblock %}
+    </div>
+
+    {% if form %}
+    <div id="form-wrapper">
+    {% block form %}{% endblock %}
+    </div>
+    {% endif %}
+
+    <footer>
+    <div id="footer-wrapper">
+    <span><h3>Footer</h3></span>
+    </div>
+    </footer>
+
+  </body>
+</html>

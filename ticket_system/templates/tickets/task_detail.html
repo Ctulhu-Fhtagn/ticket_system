@@ -1,0 +1,26 @@
+{% extends 'tickets/base_ticket.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<hr>
+{{ task.text }}
+<hr>
+<h3>Created by:</h3>
+<p>{{ task.client }}</p>
+{% endblock %}
+<!--
+{% block form%}
+<h2>Add new Note</h2>
+<form action="{% url 'author-detail' author.id %}" method="POST">
+{% csrf_token %}
+<ul>
+{{ form.as_ul }}
+</ul>
+<input type="submit" value="Add Note">
+</form>
+{% endblock %}
+-->
