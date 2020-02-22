@@ -12,3 +12,14 @@
   {% endfor %}
 </ol>
 {% endblock %}
+
+{% block form%}
+<h2>Add new Task</h2>
+<form action="{% url 'task-list' %}" method="POST">
+{% csrf_token %}
+<ul>
+{{ form.as_ul }}
+</ul>
+<input type="submit" value="Add Task">
+</form>
+{% endblock %}
