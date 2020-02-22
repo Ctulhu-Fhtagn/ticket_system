@@ -1,0 +1,20 @@
+{% extends 'tickets/base_ticket.html' %}
+
+{% block title %}
+{{ task.title }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ task.title }}</h1>
+<hr>
+{{ task.text }}
+<hr>
+<h3>Created by:</h3>
+<p>{{ task.client.full_name }}</p>
+<h3>Executor:</h3>
+<p>{{ task.executor.full_name }} <b>from</b> {{ task.department.name }} department</p>
+<h3>Priority:</h3>
+<p>{{ task.priority }}</p>
+<h3>Status:</h3>
+<p>{{ task.status }}</p>
+{% endblock %}

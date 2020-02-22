@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Client(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_executor = models.BooleanField()
-    department = models.ForeignKey('Department', on_delete=models.CASCADE)
+    department = models.ForeignKey('Department', blank=True, null=True, on_delete=models.SET_NULL)
     is_manager = models.BooleanField()
 
     @property
@@ -33,17 +33,13 @@ class Task(models.Model):
         ('l', 'low'),
         ('h', 'high'),
     ]
-    priority_client = models.CharField(
+    priority = models.CharField(
         choices =  PRIORITY_CHOICES,
         max_length = 1,
         default = 'n',
         help_text = 'For chosing priority your task',
     )
-    priority_executor = models.CharField(
-        choices =  PRIORITY_CHOICES,
-        max_length = 1,
-        default = 'n',
-    )
+    
     STATUS_CHOICES = [
         ('2d','todo'),
         ('iw','inwork'),
