@@ -20,16 +20,17 @@ def task_list(request):
         form = AddTaskForm(request.POST)
         if form.is_valid():
             new_task = Task(
-                # client=user,
+                client=request.user.client,
+                executor=request.user.client,   #???
                 title=form.cleaned_data.get('title'),
                 text=form.cleaned_data.get('text'),
-
+                department=request.department   #???
             )
             new_task.save()
-            new_task.tags.set(form.cleaned_data.get('tags')),
+            # new_task.tags.set(form.cleaned_data.get('tags')),
             context['form'] = AddTaskForm()
     elif request.method == 'GET':
-        #if request.user == user:
+        # if request.user == user:
         form = AddTaskForm()
         context['form'] = form
     return render(request, 'tickets/task_list.html', context)
@@ -39,6 +40,8 @@ def task_detail(request, task_id):
     task = Task.objects.get(pk=task_id)
     context = {
         'task': task,
+        'priority': Task.PRIORITY_CHOICES_DICT[task.priority],
+        'status':  Task.STATUS_CHOICES_DICT[task.status],
      }
 
     return render(request, 'tickets/task_detail.html', context)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load bootstrap4 %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -7,29 +7,17 @@
   </head>
   <body>
 
-    <header>
-    <div id="menu-element">
-      <span>
-      <a href="{% url 'task-list' %}">Tasks</a>
-      </span>
-    </div>
-    </header>
-
-    {% if filter_form %}
-    <div id="filter-form-wrapper">
-    {% block filter_form %}{% endblock %}
-    </div>
-    {% endif %}
-
-    <div id="content-wrapper">
-    {% block content %}{% endblock %}
-    </div>
-
-    {% if form %}
-    <div id="form-wrapper">
-    {% block form %}{% endblock %}
-    </div>
-    {% endif %}
-
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          1 of 3
+        </div>
+        <div class="col-6">
+          {% block bootstrap4_content %}{% endblock %}
+        </div>
+        <div class="col">
+          {% block form %}{% endblock %}
+        </div>
+      </div>
   </body>
 </html>

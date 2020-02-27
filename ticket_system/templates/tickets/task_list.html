@@ -13,7 +13,7 @@
 </ol>
 {% endblock %}
 
-{% block form%}
+{% form %}
 <h2>Add new Task</h2>
 <form action="{% url 'task-list' %}" method="POST">
 {% csrf_token %}
