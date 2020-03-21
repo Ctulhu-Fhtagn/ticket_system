@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic.edit import UpdateView
 from ticket_system.ticket.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
@@ -21,16 +22,16 @@ def task_list(request):
         if form.is_valid():
             new_task = Task(
                 client=request.user.client,
-                executor=request.user.client,   #???
+                executor=Client.get_random(Client.objects.filter(department=form.cleaned_data.get('department')[0])),
                 title=form.cleaned_data.get('title'),
                 text=form.cleaned_data.get('text'),
-                department=request.department   #???
+                department=form.cleaned_data.get('department')[0],
             )
             new_task.save()
-            # new_task.tags.set(form.cleaned_data.get('tags')),
+            new_task.tag.set(form.cleaned_data['tags'])
+            new_task.save()
             context['form'] = AddTaskForm()
     elif request.method == 'GET':
-        # if request.user == user:
         form = AddTaskForm()
         context['form'] = form
     return render(request, 'tickets/task_list.html', context)
@@ -42,6 +43,17 @@ def task_detail(request, task_id):
         'task': task,
         'priority': Task.PRIORITY_CHOICES_DICT[task.priority],
         'status':  Task.STATUS_CHOICES_DICT[task.status],
-     }
-
+    }
     return render(request, 'tickets/task_detail.html', context)
+    
+
+@login_required(login_url='/admin/login')
+def task_edit(request, task_id):
+    task = Task.objects.get(pk=task_id)
+    context = {
+        'task': task,
+        'priority': Task.PRIORITY_CHOICES_DICT[task.priority],
+        'status':  Task.STATUS_CHOICES_DICT[task.status],
+    }
+    return render(request, 'tickets/task_detail_edit.html', context)
+    

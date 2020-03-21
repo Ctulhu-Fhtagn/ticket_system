@@ -15,6 +15,9 @@ class Client(models.Model):
     def __str__(self):
         return f'{self.pk}: {self.full_name}'
 
+    def get_random(queryset):
+        return queryset.order_by("?").first()
+
 class Department(models.Model):
     name = models.TextField()
     description = models.TextField()
@@ -31,20 +34,20 @@ class Tag(models.Model):
 
 class Task(models.Model):
     PRIORITY_CHOICES = [
-        ('n', 'normal'),
-        ('l', 'low'),
-        ('h', 'high'),
+        ('n', 'Normal'),
+        ('l', 'Low'),
+        ('h', 'High'),
     ]
     PRIORITY_CHOICES_DICT = {
         x[0]: x[1] for x in PRIORITY_CHOICES
     }
 
     STATUS_CHOICES = [
-        ('2d','todo'),
-        ('iw','inwork'),
-        ('rv','review'),
-        ('dn','done'),
-        ('pp','postponed')
+        ('2d','To do'),
+        ('iw','Inwork'),
+        ('rv','Review'),
+        ('dn','Done'),
+        ('pp','Postponed')
     ]
 
     STATUS_CHOICES_DICT = {
@@ -59,7 +62,7 @@ class Task(models.Model):
     priority = models.CharField(
         choices =  PRIORITY_CHOICES,
         max_length = 1,
-        default = 'n',
+        default = 'h',
         help_text = 'For chosing priority your task',
     )
         
@@ -75,3 +78,5 @@ class Task(models.Model):
     def __str__(self):
         return f'{self.pk}: {self.title}'
 
+    # def get_absolute_url(self):
+    #     return reverse('task-edit', args=[self.pk])

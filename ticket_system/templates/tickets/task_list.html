@@ -1,25 +1,55 @@
-{% extends 'tickets/base_ticket.html' %}
+{% extends "tickets/base.html" %}
 
-{% block title %}
+{% block bootstrap4_title %}
 {{ title }}
 {% endblock %}
 
-{% block content %}
-<h1>{{ title }}</h1>
-<ol>
-  {% for task in tasks %}
-  <li><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></li>
-  {% endfor %}
-</ol>
+
+{% block bootstrap4_content %}
+<div class="row">
+  <div class="col-sm">
+    Hello, {{ user.client.full_name }}
+  </div>
+  <div class="col-sm-6">
+    <h1>{{ title }}</h1>
+    <ul>
+    {% for task in tasks %}
+    <li><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    {% block bootstrap4_form %}
+    <h2>Add new Task</h2>
+    <form action="{% url 'task-list' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <!-- <div class="form-group col-sm-10">
+      <label>Title</label>
+      <textarea class="form-control" id="title" rows="1"></textarea>
+    </div>
+    
+    <div class="form-group col-sm-10">
+      <label>Text</label>
+      <textarea class="form-control" id="text" rows="3"></textarea>
+    </div>
+
+    <select class="form-control col-sm-10" id="department">
+      
+      <option value="department.network">network</option>
+      <option value="network">hardware</option>
+      <option value="network">software</option> -->
+
+    
+    <input type="submit" value="Add Task">
+    </form>
+    {% endblock %}
+  </div>
+</div>
 {% endblock %}
 
-{% form %}
-<h2>Add new Task</h2>
-<form action="{% url 'task-list' %}" method="POST">
-{% csrf_token %}
-<ul>
-{{ form.as_ul }}
-</ul>
-<input type="submit" value="Add Task">
-</form>
-{% endblock %}
+        
+
+
+     

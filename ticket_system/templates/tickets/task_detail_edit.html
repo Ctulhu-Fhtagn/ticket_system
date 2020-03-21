@@ -11,14 +11,12 @@
     <div class="col-sm">
         <dl>
             <dd><a href="{% url 'task-list' %}">Task list</a></dd>
-            <dd><a href="{% url 'task-edit' task.id %}">Edit</a></dd>
+            <dd><a href="{% url 'task-detail' task.id %}">Back</a></dd>
         </dl>
-        
     </div>
     <div class="col-sm-10" >
-        
+ 
         <h1 class="text-center">{{ task.title }} </h1>
-        
 
         <dl class="row">
             <dt class="col-sm-3">Task text:</dt>
@@ -29,21 +27,26 @@
             <dt class="col-sm-3">Created by:</dt>
             <dd class="col-sm-9">{{ task.client.full_name }}</dd>
         </dl>
+
         <dl class="row">
             <dt class="col-sm-3">Executor:</dt>
-            <dd class="col-sm-9">{{ task.executor.full_name }} from {{ task.department.name }} department</dd>
+            <dd><input value="{{ task.executor.full_name }}" /> from <input value="{{ task.department.name }}" />department</dd>
         </dl>
+
         <dl class="row">
             <dt class="col-sm-3">Priority:</dt>
-            <dd class="col-sm-9">{{ priority }}</dd>
+            <dd><input value="{{ priority }}" /></dd>
+            <!-- <dd class="col-sm-9">{{ priority }}</dd> -->
         </dl>
+
         <dl class="row">
             <dt class="col-sm-3">Status:</dt>
-            <dd class="col-sm-9">{{ status }}</dd>
+            <dd><input value="{{ status }}" /></dd>
         </dl>
+
         <dl class="row">
             <dt class="col-sm-3">Tags:</dt>
-            <dd class="col-sm-9">???</dd>
+            <dd><input value="{{ tags }}" /></dd>
         </dl>
 
     </div>
