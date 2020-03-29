@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'ticket_system.ticket',
-    'django_extensions'
+    'django_extensions',
+    'taggit'
 ]
 
 MIDDLEWARE = [

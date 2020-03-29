@@ -14,6 +14,6 @@ class ClientAdmin(admin.ModelAdmin):
 class DepartmentAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(Tag)
+# class TagAdmin(admin.ModelAdmin):
+#     pass
