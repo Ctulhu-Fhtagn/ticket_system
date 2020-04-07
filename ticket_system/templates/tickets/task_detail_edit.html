@@ -1,5 +1,6 @@
 {% extends "tickets/base.html" %}
 
+{% load crispy_forms_tags %}
 
 <div class="container-fluid">
 {% block bootstrap4_title %}
@@ -7,50 +8,29 @@
 {% endblock %}
 
 {% block bootstrap4_content %}
+<div>
+    <div class="d-block p-2 bg-primary text-white text-right" >
+        <div class="clearfix">
+            <a type="button" class="btn btn-secondary float-left" href="{% url 'task-list' %}">Task list</a>
+            <a type="button" class="btn btn-secondary float-left" href="{% url 'task-detail' task.id %}">Back</a>
+            <h4> Hello, {{ user.client.full_name }}</h4> 
+        </div>
+    </div>
+    
 <div class="row">
-    <div class="col-sm">
-        <dl>
-            <dd><a href="{% url 'task-list' %}">Task list</a></dd>
-            <dd><a href="{% url 'task-detail' task.id %}">Back</a></dd>
-        </dl>
+
+    <div class="col-sm-1"></div>
+
+    <div class="col-sm" >
+
+
+        {% crispy form form.helper %}
+        
+      
     </div>
     
-    <div class="col-sm-10" >
- 
-        <h1 class="text-center">{{ task.title }} </h1>
+</div>
 
-        <dl class="row">
-            <dt class="col-sm-3">Task text:</dt>
-            <dd class="col-sm-9">{{ task.text }}</dd>
-        </dl>
-
-        <dl class="row">
-            <dt class="col-sm-3">Created by:</dt>
-            <dd class="col-sm-9">{{ task.client.full_name }}</dd>
-        </dl>
-
-        <dl class="row">
-            <dt class="col-sm-3">Executor:</dt>
-            <dd><input value="{{ task.executor.full_name }}" /> from <input value="{{ task.department.name }}" />department</dd>
-        </dl>
-
-        <dl class="row">
-            <dt class="col-sm-3">Priority:</dt>
-            <dd><input value="{{ priority }}" /></dd>
-        </dl>
-
-        <dl class="row">
-            <dt class="col-sm-3">Status:</dt>
-            <dd><input value="{{ status }}" /></dd>
-        </dl>
-
-        <dl class="row">
-            <dt class="col-sm-3">Tags:</dt>
-            <dd><input value="{{ tags }}" /></dd>
-        </dl>
-
-    </div>
-    
-  </div>
+</div>
   {% endblock %}
 </div>

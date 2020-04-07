@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'ticket_system.ticket',
     'django_extensions',
-    'taggit'
+    'taggit',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +142,5 @@ BOOTSTRAP4 = {
     "javascript_in_head": True,
     "include_jquery": True,
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

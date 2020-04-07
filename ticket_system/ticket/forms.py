@@ -1,18 +1,29 @@
 from django import forms
 from django.contrib.auth.models import User
 from ticket_system.ticket.models import *
+from crispy_forms.helper import FormHelper
+from django.urls import reverse
+from crispy_forms.layout import Submit
 
 
-# class AddTaskForm(forms.ModelForm):
-#     title = forms.CharField(max_length=150)
-#     text = forms.CharField(max_length=2000)
-#     department = forms.ModelMultipleChoiceField(queryset=Department.objects.all())
-#     # priority = forms.ChoiceField(choices = Task.PRIORITY_CHOICES)
-#     # new_tag = forms.CharField(max_length=20, required=False)
-#     # tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
-#     tag = forms.CharField(max_length=50)
-class TaskForm(forms.ModelForm):
+
+class TaskEditForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['executor','department','priority','status','tag']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        if self.instance.id:
+            self.helper.form_action = reverse('task-edit', args=[self.instance.id])
+        else:
+            self.helper.form_action = reverse('task-list')
+        self.helper.add_input(Submit('submit', 'Submit'))
+
+
+class TaskForm(TaskEditForm):
     class Meta:
         model = Task
         fields = ['title', 'text', 'department', 'tag']    
-    

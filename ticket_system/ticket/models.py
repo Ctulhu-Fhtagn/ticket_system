@@ -28,12 +28,6 @@ class Department(models.Model):
         return f'{self.pk}: {self.name}'
 
 
-# class Tag(models.Model):
-#     text = models.CharField(max_length=20)
-
-#     def __str__(self):
-#         return self.text
-
 class Task(models.Model):
     PRIORITY_CHOICES = [
         ('n', 'Normal'),
@@ -75,7 +69,6 @@ class Task(models.Model):
     )
     
     department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
-    # tag = models.ManyToManyField(tag_models.Tag, blank=True)
     tag = TaggableManager()
 
     def __str__(self):
