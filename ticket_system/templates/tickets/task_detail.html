@@ -10,7 +10,9 @@
     <div class="d-block p-2 bg-primary text-white text-right" >
         <div class="clearfix">
             <a type="button" class="btn btn-secondary float-left" href="{% url 'task-list' %}">Task list</a>
-            <a type="button" class="btn btn-secondary float-left" href="{% url 'task-edit' task.id %}">Edit</a>
+            {% if perms.ticket.change_task %}
+                <a type="button" class="btn btn-secondary float-left" href="{% url 'task-edit' task.id %}">Edit</a>
+            {% endif %}
             <h4> Hello, {{ user.client.full_name }}</h4> 
         </div>
     </div>

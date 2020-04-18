@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic.edit import UpdateView
 from ticket_system.ticket.models import Task, Client
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate
 from ticket_system.ticket.forms import TaskForm, TaskEditForm
 
@@ -13,7 +13,6 @@ from ticket_system.ticket.forms import TaskForm, TaskEditForm
 @login_required(login_url='/admin/login')
 def task_list(request):
     tasks = Task.objects.all()
-
     
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -23,6 +22,7 @@ def task_list(request):
             new_task.client = request.user.client
             new_task.save()
             form.save_m2m()
+            return HttpResponseRedirect(request.path)
 
     elif request.method == 'GET':
         form = TaskForm()
@@ -42,11 +42,12 @@ def task_detail(request, task_id):
         'priority': Task.PRIORITY_CHOICES_DICT[task.priority],
         'status':  Task.STATUS_CHOICES_DICT[task.status],
     }
-    
+    # import pdb; pdb.set_trace()
     return render(request, 'tickets/task_detail.html', context)
     
 
 @login_required(login_url='/admin/login')
+@permission_required("ticket.change_task")
 def task_edit(request, task_id):
     task = Task.objects.get(pk=task_id)
     

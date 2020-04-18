@@ -23,6 +23,17 @@
 
     <div class="col-sm" >
 
+        <h1 class="text-center">{{ task.title }} </h1>
+        
+        <dl class="row">
+            <dt class="col-sm-3">Task text:</dt>
+            <dd class="col-sm-9">{{ task.text }}</dd>
+        </dl>
+
+        <dl class="row">
+            <dt class="col-sm-3">Created by:</dt>
+            <dd class="col-sm-9">{{ task.client.full_name }}</dd>
+        </dl>
 
         {% crispy form form.helper %}
         

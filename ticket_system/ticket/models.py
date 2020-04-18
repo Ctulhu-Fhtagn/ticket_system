@@ -29,6 +29,12 @@ class Department(models.Model):
 
 
 class Task(models.Model):
+    
+    # class Meta:
+    #     permissions = ( ("can_create_task", "User Can Create a new task"),
+    #                     ("can_update_task", "User Can update a task"),
+    #                     )
+
     PRIORITY_CHOICES = [
         ('n', 'Normal'),
         ('l', 'Low'),
@@ -69,8 +75,9 @@ class Task(models.Model):
     )
     
     department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
-    tag = TaggableManager()
+    tag = TaggableManager(blank=True)
 
     def __str__(self):
         return f'{self.pk}: {self.title}'
 
+    

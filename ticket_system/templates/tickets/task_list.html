@@ -10,29 +10,93 @@
 <h4 class="d-block p-2 bg-primary text-white text-right" >Hello, {{ user.client.full_name }}</h4>
 
 <div class="row">
-  <div class="col-sm-1"></div>
+  
+  <div class="col-sm">
+    <h1 align="center" >{{ title }}</h1>
+        
+    <table class="table">
+      <thead>
+        <tr>
+          
+          <th scope="col">Title</th>
+          <th scope="col">Text problem</th>
+          
+          {% if perms.ticket.change_task or perms.ticket.add_task%}
+            <th scope="col">Department</th>
+            <th scope="col">Tags</th>
+          {% endif %}
 
-  <div class="col-sm-7">
-    <h1>{{ title }}</h1>
-    <ul>
-    {% for task in tasks %}
-    <li><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></li>
-    {% endfor %}
-    </ul>
+          {% if perms.ticket.change_task or perms.ticket.view_task %}
+            <th scope="col">Priority</th>
+            <th scope="col">Status</th>
+          {% endif %}
+          
+          {% if perms.ticket.change_task %}
+            <th scope="col">Client</th>
+            <th scope="col">Executor</th>
+          {% endif %}
+
+        </tr>
+      </thead>
+      {% for task in tasks %}
+      <tbody>
+        <tr href="{% url 'task-detail' task.id %}" >
+          
+          <td><a href="{% url 'task-detail' task.id %}">{{ task.title }}</a></td>
+          <td><a href="{% url 'task-detail' task.id %}">{{ task.text }}</a></td>
+          
+          {% if perms.ticket.change_task or perms.ticket.add_task%}
+            <td><a href="{% url 'task-detail' task.id %}">{{ task.department.name }}</a></td>
+            <td><a href="{% url 'task-detail' task.id %}">
+              {% for tag in task.tag.all %}
+                <a>{{ tag.name }}</a>
+              {% endfor %}</a>
+            </td>
+          {% endif %}
+          
+          {% if perms.ticket.change_task or perms.ticket.view_task %}
+            <td><a href="{% url 'task-detail' task.id %}">{{ task.priority }}</a></td>
+            <td><a href="{% url 'task-detail' task.id %}">{{ task.status }}</a></td>
+          {% endif %}
+          
+          {% if perms.ticket.change_task %}
+            <td><a href="{% url 'task-detail' task.id %}">{{ task.client.full_name }}</a></td>
+            <td><a href="{% url 'task-detail' task.id %}">{{ task.executor.full_name }}</a></td>
+          {% endif %}
+
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+
+
+    
+    
   </div>
   
+  {% if perms.ticket.add_task %}
+
   <div class="col-sm-4">
-    {% block bootstrap4_form %}
-    <h2>Add new Task</h2>
-    <form action="{% url 'task-list' %}" method="POST">
-    {% csrf_token %}
 
-    {{ form.as_p }}
-  
-    <input type="submit" value="Add Task">
-    </form>
-    {% endblock %}
+    
+
+      {% block bootstrap4_form %}
+      
+      <h2>Add new Task</h2>
+      <form action="{% url 'task-list' %}" method="POST">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+    
+      <input type="submit" value="Add Task">
+      </form>
+      {% endblock %}
+
+
   </div>
+
+  {% endif %}
+  
 </div>
 {% endblock %}
 
